@@ -167,6 +167,12 @@ type PodPolicy struct {
 	// The default is to not use memory as the storage medium
 	// No effect if persistent volume is used
 	Tmpfs bool `json:"tmpfs,omitempty"`
+
+	// hostNetwork will set HostNetwork: true in podspec
+	HostNetwork bool `json:"hostNetwork,omitempty"`
+
+	// dnsPolicy will set dnsPolicy: <whatever> in podspec
+	DNSPolicy v1.DNSPolicy `json:"dnsPolicy,omitempty"`
 }
 
 // TODO: move this to initializer
