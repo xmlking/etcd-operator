@@ -18,13 +18,13 @@ import (
 	"errors"
 	"strings"
 
-	"k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 const (
 	defaultRepository  = "quay.io/coreos/etcd"
-	DefaultEtcdVersion = "3.2.13"
+	DefaultEtcdVersion = "v3.2.13"
 )
 
 var (
@@ -86,7 +86,7 @@ type ClusterSpec struct {
 	// The version must follow the [semver]( http://semver.org) format, for example "3.2.13".
 	// Only etcd released versions are supported: https://github.com/coreos/etcd/releases
 	//
-	// If version is not set, default is "3.2.13".
+	// If version is not set, default is "v3.2.13".
 	Version string `json:"version,omitempty"`
 
 	// Paused is to pause the control of the operator for the etcd cluster.
@@ -199,7 +199,8 @@ func (e *EtcdCluster) SetDefaults() {
 		c.Version = DefaultEtcdVersion
 	}
 
-	c.Version = strings.TrimLeft(c.Version, "v")
+	// not used anymore, we take the full version name as final version (not prepending v to the version)
+	// c.Version = strings.TrimLeft(c.Version, "v")
 
 	// convert PodPolicy.AntiAffinity to Pod.Affinity.PodAntiAffinity
 	// TODO: Remove this once PodPolicy.AntiAffinity is removed
